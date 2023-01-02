@@ -1,23 +1,14 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-
+import { BrowserRouter } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
+import AppRouter from "./components/app-router/app-router";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={() => console.log("click")}>click</button>
-        ffff
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <CssBaseline />
+        <AppRouter />
+      </BrowserRouter>
     </div>
   );
 }
