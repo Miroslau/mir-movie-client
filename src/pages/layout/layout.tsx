@@ -5,7 +5,7 @@ import SideBar from "../../components/section-component/side-bar/side-bar";
 
 const Layout = () => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
 
   return (
     <Box

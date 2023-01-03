@@ -1,14 +1,19 @@
 import React, { FC } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../../pages/layout/layout";
-import { publicRoutes } from "../../routes";
+import {publicRoutes, publicRoutesInLayout} from "../../routes";
 
 const AppRouter: FC = () => {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/main" replace />} />
+        {
+            publicRoutes.map(({ path, Component }) => (
+                <Route key={path} path={path} element={<Component />} />
+            ))
+        }
       <Route element={<Layout />}>
-        <Route path="/" element={<Navigate to="/movies" replace />} />
-        {publicRoutes.map(({ path, Component }) => (
+        {publicRoutesInLayout.map(({ path, Component }) => (
           <Route key={path} path={path} element={<Component />} />
         ))}
       </Route>

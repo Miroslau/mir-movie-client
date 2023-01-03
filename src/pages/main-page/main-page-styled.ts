@@ -21,8 +21,10 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const ContainerForMovies = styled.div`
+  position: absolute;
+  bottom: 50px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 `;
