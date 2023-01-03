@@ -1,6 +1,7 @@
 import genreType from "./genre-type";
 import directorType from "./director-type";
 import actorType from "./actor-type";
+import StatusEnum from "../enums/status-enum";
 
 export type movieType = {
   id: number;
@@ -21,14 +22,8 @@ export type movieParams = {
   page: number;
 };
 
-export enum Status {
-  LOADING = "loading",
-  SUCCESS = "completed",
-  ERROR = "error",
-}
-
 export type movieSliceState = {
   movies: movieType[];
-  status: Status;
+  status: StatusEnum;
   errorMessage: unknown;
 };

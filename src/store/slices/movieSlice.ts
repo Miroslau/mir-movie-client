@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { movieSliceState, movieType, Status } from "../../types/moive-type";
+import { movieSliceState, movieType } from "../../types/moive-type";
 import { fetchMovies } from "../actions/fetch-movies";
 import { RootState } from "../store";
+import StatusEnum from "../../enums/status-enum";
 
 const initialState: movieSliceState = {
   errorMessage: "",
   movies: [],
-  status: Status.LOADING,
+  status: StatusEnum.LOADING,
 };
 
 export const movieSlice = createSlice({
@@ -19,23 +20,23 @@ export const movieSlice = createSlice({
     clearState(state) {
       state.movies = [];
       state.errorMessage = "";
-      state.status = Status.LOADING;
+      state.status = StatusEnum.LOADING;
     },
   },
 
   extraReducers: (builder) => {
     builder.addCase(fetchMovies.pending, (state, { payload }) => {
-      state.status = Status.LOADING;
+      state.status = StatusEnum.LOADING;
       state.movies = [];
     });
 
     builder.addCase(fetchMovies.fulfilled, (state, { payload }) => {
       state.movies = payload;
-      state.status = Status.SUCCESS;
+      state.status = StatusEnum.SUCCESS;
     });
 
     builder.addCase(fetchMovies.rejected, (state, { payload }) => {
-      state.status = Status.ERROR;
+      state.status = StatusEnum.ERROR;
       state.movies = [];
       state.errorMessage = payload;
     });

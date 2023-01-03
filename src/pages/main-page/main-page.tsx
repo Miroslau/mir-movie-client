@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState, useCallback } from "react";
-import { Box, Paper, Typography } from "@mui/material";
 import BoxTitle from "../../components/section-component/box-title/box-title";
 import { useSelector } from "react-redux";
 import {clearState, movieSelector} from "../../store/slices/movieSlice";
@@ -11,10 +10,12 @@ import { movieType } from "../../types/moive-type";
 import Modal from "../../components/modal/modal";
 import Loader from "../../components/loader/loader";
 import {useNavigate} from "react-router-dom";
+import StatusEnum from "../../enums/status-enum";
+import {MOVIES} from "../../constants/routes";
 
 const MainPage: FC = () => {
   const [movieOffset, setMovieOffset] = useState(0);
-  const [moviesCount, setMoviesCount] = useState(6);
+  const [moviesCount] = useState(6);
   const [currentMovie, setCurrentMovie] = useState<movieType | null>(null);
   const [horizontalPoster, setHorizontalPoster] = useState<string | null>(null);
 
@@ -22,7 +23,7 @@ const MainPage: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { movies, status, errorMessage } = useSelector(movieSelector);
+  const { movies, status } = useSelector(movieSelector);
 
   const getMovies = () => {
     dispatch(
@@ -38,7 +39,7 @@ const MainPage: FC = () => {
   }, [movieOffset]);
 
   useEffect(() => {
-    if (status === "completed") {
+    if (status === StatusEnum.SUCCESS) {
       setCurrentMovie(movies[0]);
       setHorizontalPoster(movies[0].horizontalPoster);
     }
@@ -51,13 +52,13 @@ const MainPage: FC = () => {
 
   const navigateToMovies = () => {
     dispatch(clearState());
-    navigate('/movies');
+    navigate(`/${MOVIES}`);
   }
 
 
   return (
     <Container image={horizontalPoster}>
-      {status === "loading" && (
+      {status === StatusEnum.LOADING && (
         <Modal>
           <Loader />
         </Modal>
