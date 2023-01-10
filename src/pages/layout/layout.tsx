@@ -15,13 +15,15 @@ const Layout = () => {
     >
       {isSideBarOpen && (
         <SideBar
-          drawerWidth="248px"
+          drawerWidth="250px"
           isNonMobile={isNonMobile}
           isSideBarOpen={isSideBarOpen}
           setIsSideBarOpen={setIsSideBarOpen}
         />
       )}
-      <Box flexGrow={1}>
+      <Box flexGrow={1} style={{
+        backgroundColor: '#191F45'
+      }}>
         <Outlet />
       </Box>
     </Box>

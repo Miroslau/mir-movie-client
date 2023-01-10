@@ -17,7 +17,6 @@ export const Container = styled.div<ContainerProps>`
   background-size: cover;
   height: 100vh;
   background-attachment: fixed;
-  transition: 0.3s ease-in-out;
 `;
 
 export const ContainerForMovies = styled.div`

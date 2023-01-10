@@ -50,10 +50,10 @@ const MainPage: FC = () => {
     setHorizontalPoster(movie.horizontalPoster);
   }, [movies]);
 
-  const navigateToMovies = () => {
+  const navigateToMovies = useCallback(() => {
     dispatch(clearState());
     navigate(`/${MOVIES}`);
-  }
+  }, [])
 
 
   return (
