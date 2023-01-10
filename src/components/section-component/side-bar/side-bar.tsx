@@ -24,7 +24,6 @@ const SideBar: FC<SideBarProps> = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(pathname.substring(1))
     setActive(pathname.substring(1));
   }, [pathname]);
 
