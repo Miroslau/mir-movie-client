@@ -17,9 +17,10 @@ interface FormProps {
     handleSubmit: (args?: any) => void;
     title: string;
     handleClear: () => void;
+    changeRating?: (args?: any) => void;
 }
 
-const Form: FC<FormProps> = ({ inputs, model, errors, handleChange, handleSubmit, title }) => {
+const Form: FC<FormProps> = ({ inputs, model, errors, handleChange, changeRating, handleSubmit, title }) => {
 
     const DynamicComponent = (input: Input): React.FC | React.Component | any => {
         const type = input.type || '';
@@ -55,6 +56,7 @@ const Form: FC<FormProps> = ({ inputs, model, errors, handleChange, handleSubmit
                                    helperText={errors[`${input.model}`]}
                                    variant={input.variant}
                                    required={input.required}
+                                   changeRating={changeRating}
                                    inputText={handleChange}
                                    label={input.title}/>
                     )

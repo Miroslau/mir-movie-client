@@ -11,12 +11,18 @@ interface RatingProps {
     title: string;
     name: string;
     value: number;
+    changeRating: (args?: any) => void;
 }
-const CustomRating: FC<RatingProps> = ({ title, name, value }) => {
+const CustomRating: FC<RatingProps> = ({ title, name, changeRating, value }) => {
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number | null): void => {
+        changeRating(newValue);
+    }
+
     return <Container>
         <Typography>{title}</Typography>
         <Ratings>
-            <Rating sx={customStyle} name={name} value={value} size="large" />
+            <Rating sx={customStyle} onChange={handleChange} name={name} value={value} size="large" />
         </Ratings>
     </Container>
 };

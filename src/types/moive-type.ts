@@ -2,6 +2,7 @@ import genreType from "./genre-type";
 import directorType from "./director-type";
 import actorType from "./actor-type";
 import StatusEnum from "../enums/status-enum";
+import {Moment} from "moment";
 
 export type movieType = {
   id: number;
@@ -16,6 +17,14 @@ export type movieType = {
   actors: actorType[];
   genres: genreType[];
 };
+
+export type createMovie = {
+  title: string;
+  plot: string;
+  rating: number;
+  release: Moment;
+  movieLength: number;
+}
 
 export type movieParams = {
   limit: number;

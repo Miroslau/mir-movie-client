@@ -5,7 +5,7 @@ interface TextNumberProps {
     label?: string;
     className?: any;
     variant?: "outlined" | "standard" | "filled" | undefined;
-    value: string;
+    value: number;
     name?: string;
     type: string;
     required: boolean;
@@ -26,7 +26,7 @@ const TextNumber:FC<TextNumberProps> = ({
     placeholder,
     inputText
                                         }) => {
-    const [currentValue, setCurrentValue] = useState(value);
+    const [currentValue, setCurrentValue] = useState<number>(value);
 
     useEffect(() => {
         if (value !== currentValue) {
@@ -35,7 +35,7 @@ const TextNumber:FC<TextNumberProps> = ({
     }, [value]);
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setCurrentValue(event.target?.value)
+        setCurrentValue(Number(event.target?.value))
     }
     return (
         <TextField className={className}
