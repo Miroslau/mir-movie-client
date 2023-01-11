@@ -3,7 +3,7 @@ import {Box, Pagination, useMediaQuery} from "@mui/material";
 import Header from "../../components/section-component/header/Header";
 import {useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
-import {clearState, movieSelector, setMovie} from "../../store/slices/movieSlice";
+import {clearState, movieSelector, setMovie, setStatus} from "../../store/slices/movie-slice";
 import {addMovie, fetchMovies} from "../../store/actions/fetch-movies";
 import StatusEnum from "../../enums/status-enum";
 import Loader from "../../components/loader/loader";
@@ -19,6 +19,8 @@ import useFormForMovie from "../../hooks/use-form-for-movie";
 import {movieValidator} from "../../validators/movie-validator";
 import {PaginationContainer} from "./movies-page-styled";
 import moviesAPI from "../../api/movies/MoviesAPI";
+import {filterSelector, setCurrentPage} from "../../store/slices/filter-slice";
+import statusEnum from "../../enums/status-enum";
 
 const DIALOG = {
     display: 'grid',
@@ -26,26 +28,28 @@ const DIALOG = {
     alignItems: 'center',
 }
 
-const LIMIT_ITEMS = 10
+const LIMIT_ITEMS = 8;
 
 const MoviesPage = () => {
     const isNonMobile = useMediaQuery("(min-width: 1000px)");
-    const [movieOffset, setMovieOffset] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [isOpenModal, setOpenModal] = useState(false);
 
     const dispatch = useAppDispatch();
 
-    const { movies, status } = useSelector(movieSelector);
+    const { movies, totalPages, totalMovies, status } = useSelector(movieSelector);
+    const { currentPage } = useSelector(filterSelector);
 
     const createMovie = () => {
+        dispatch(setStatus(statusEnum.LOADING));
         moviesAPI.createMovie(movie)
             .then(({ data }) => {
-                dispatch(setMovie(data));
+                dispatch(setStatus(statusEnum.SUCCESS));
                 closeModal();
             })
             .catch(error => {
                 console.error(error);
+                dispatch(setStatus(statusEnum.ERROR));
                 closeModal();
             })
     }
@@ -59,10 +63,14 @@ const MoviesPage = () => {
         dispatch(
             fetchMovies({
                 limit: LIMIT_ITEMS,
-                page: movieOffset,
+                page: currentPage,
             })
         );
     };
+
+    const onChangePage = (_: any, page: number): void => {
+        dispatch(setCurrentPage(page))
+    }
 
     const { handleChange, handleSubmit, movie, errors, handleClear, changeRating } = useFormForMovie(
         createMovie,
@@ -71,14 +79,13 @@ const MoviesPage = () => {
     );
 
     useEffect(() => {
-        console.log(123)
         getMovies();
         dispatch(clearState());
-    }, [])
+    }, [currentPage])
 
     useEffect(() => {
-        setPageCount(Math.ceil(movies.length));
-    }, [LIMIT_ITEMS, movieOffset, movies])
+        setPageCount(Math.ceil(totalMovies / totalPages));
+    }, [LIMIT_ITEMS, movies])
 
     return (
         <Box p="1.5rem 2.5rem">
@@ -129,7 +136,12 @@ const MoviesPage = () => {
                 }
             </Box>
             <PaginationContainer>
-                <Pagination count={pageCount} variant="outlined" color="secondary" size="large" />
+                <Pagination
+                    count={Number(pageCount)}
+                    variant="outlined"
+                    onChange={onChangePage}
+                    color="secondary"
+                    size="large" />
             </PaginationContainer>
             <ModalMui
                 isOpen={isOpenModal}

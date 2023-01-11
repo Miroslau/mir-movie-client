@@ -4,6 +4,12 @@ import actorType from "./actor-type";
 import StatusEnum from "../enums/status-enum";
 import {Moment} from "moment";
 
+export type resultType<Pagination> = {
+  results: Pagination[];
+  total: number;
+  page_total: number;
+}
+
 export type movieType = {
   id: number;
   title: string;
@@ -35,4 +41,6 @@ export type movieSliceState = {
   movies: movieType[];
   status: StatusEnum;
   errorMessage: unknown;
+  totalMovies: number;
+  totalPages: number;
 };

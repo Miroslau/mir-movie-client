@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState, useCallback } from "react";
 import BoxTitle from "../../components/section-component/box-title/box-title";
 import { useSelector } from "react-redux";
-import {clearState, movieSelector} from "../../store/slices/movieSlice";
+import {clearState, movieSelector} from "../../store/slices/movie-slice";
 import { fetchMovies } from "../../store/actions/fetch-movies";
 import { useAppDispatch } from "../../store/store";
 import BoxList from "../../components/section-component/box-list/box-list";
@@ -14,7 +14,7 @@ import StatusEnum from "../../enums/status-enum";
 import {MOVIES} from "../../constants/routes";
 
 const MainPage: FC = () => {
-  const [movieOffset, setMovieOffset] = useState(0);
+  const [movieOffset] = useState(0);
   const [moviesCount] = useState(6);
   const [currentMovie, setCurrentMovie] = useState<movieType | null>(null);
   const [horizontalPoster, setHorizontalPoster] = useState<string | null>(null);
@@ -36,7 +36,7 @@ const MainPage: FC = () => {
 
   useEffect(() => {
     getMovies();
-  }, [movieOffset]);
+  }, []);
 
   useEffect(() => {
     if (status === StatusEnum.SUCCESS) {

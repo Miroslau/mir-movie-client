@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {movieType, movieParams, createMovie} from "../../types/moive-type";
+import {movieType, movieParams, createMovie, resultType} from "../../types/moive-type";
 import moviesAPI from "../../api/movies/MoviesAPI";
 
-export const fetchMovies = createAsyncThunk<movieType[], movieParams>(
+export const fetchMovies = createAsyncThunk<resultType<movieType>, movieParams>(
   "movie/fetchMovies",
   async (params, thunkAPI) => {
     try {
