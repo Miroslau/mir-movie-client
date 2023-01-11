@@ -19,4 +19,13 @@ export const Title = styled.p`
   line-height: 30px;
   color: white;
   padding: 20px 20px;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  
+  &:hover {
+    color: rgba(250, 71, 118, 0.5);
+    font-size: 40px;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+  }
 `

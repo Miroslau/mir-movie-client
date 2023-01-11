@@ -1,4 +1,4 @@
-import { movieSlice } from "../slices/movieSlice";
+import { movieSlice } from "../slices/movie-slice";
 
 const movieReducer = movieSlice.reducer;
 
