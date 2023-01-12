@@ -3,8 +3,8 @@ import {Box, Pagination, useMediaQuery} from "@mui/material";
 import Header from "../../components/section-component/header/Header";
 import {useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
-import {clearState, movieSelector, setMovie, setStatus} from "../../store/slices/movie-slice";
-import {addMovie, fetchMovies} from "../../store/actions/fetch-movies";
+import {clearState, movieSelector, setStatus} from "../../store/slices/movie-slice";
+import {fetchMovies} from "../../store/actions/fetch-movies";
 import StatusEnum from "../../enums/status-enum";
 import Loader from "../../components/loader/loader";
 import Modal from "../../components/modal/modal";
@@ -21,6 +21,8 @@ import {PaginationContainer} from "./movies-page-styled";
 import moviesAPI from "../../api/movies/MoviesAPI";
 import {filterSelector, setCurrentPage} from "../../store/slices/filter-slice";
 import statusEnum from "../../enums/status-enum";
+import {useNavigate} from "react-router-dom";
+import {FULL_MOVIE, MOVIES} from "../../constants/routes";
 
 const DIALOG = {
     display: 'grid',
@@ -36,6 +38,8 @@ const MoviesPage = () => {
     const [isOpenModal, setOpenModal] = useState(false);
 
     const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
     const { movies, totalPages, totalMovies, status } = useSelector(movieSelector);
     const { currentPage } = useSelector(filterSelector);
@@ -67,6 +71,11 @@ const MoviesPage = () => {
             })
         );
     };
+
+    const navigateDetailPage = (id: number) => {
+        const path = FULL_MOVIE.replace('movies/:id', id.toString());
+        navigate(path);
+    }
 
     const onChangePage = (_: any, page: number): void => {
         dispatch(setCurrentPage(page))
@@ -130,6 +139,7 @@ const MoviesPage = () => {
                                id={id}
                                title={title}
                                plot={plot}
+                               handleClick={navigateDetailPage}
                                horizontalPoster={horizontalPoster}
                                rating={rating} />
                     ))

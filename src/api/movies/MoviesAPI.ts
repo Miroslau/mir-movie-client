@@ -7,6 +7,10 @@ export default {
     return httpClient.get(query);
   },
 
+  getMovieById(id: number) {
+      return httpClient.get(`movies/${id}`);
+  },
+
   createMovie({title,
       plot,
       rating,
@@ -16,5 +20,11 @@ export default {
     return httpClient.post(`/movies`, {
       title, plot, rating, release, movieLength
     })
+  },
+
+  addGenres(id: number | undefined, genres: number[]) {
+      return httpClient.post(`movies/addGenre/${id}`, {
+          genresId: genres
+      })
   }
 };
