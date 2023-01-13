@@ -12,7 +12,7 @@ import {
     Movie,
     Plot, PlotBox, PlotTitle, Score, ScoreBox, ScoreTitle,
     Title,
-    Image, MiddleItem, Text, FormContainer
+    Image, MiddleItem, Text, FormContainer, ButtonContainer
 } from "./movie-page-styled";
 import {movieType} from "../../../types/moive-type";
 import Modal from "../../../components/modal/modal";
@@ -63,6 +63,7 @@ const MoviePage = () => {
     const [isOpenModalForGenres, setOpenModalForGenres] = useState(false);
     const [isOpenModalForPosters, setOpenModalForPosters] = useState(false);
     const [isOpenModalForEditMovie, setOpenModalForEditMovie] = useState(false);
+    const [isOpenModalForDeleteMovie, setOpenModalForDeleteMovie] = useState(false);
 
     const { id } = useParams();
 
@@ -161,6 +162,20 @@ const MoviePage = () => {
         setSelectedGenres(genres);
     }
 
+    const deleteMovie = () => {
+        setLoading(true);
+        moviesAPI.deleteMovie(movie?.id)
+            .then(() => {
+                setLoading(false);
+                setOpenModalForDeleteMovie(false);
+                navigate(`/${MOVIES}`);
+            })
+            .catch(error => {
+                setLoading(false);
+                setOpenModalForDeleteMovie(false);
+            })
+    }
+
     useEffect(() => {
         getMovieById();
     }, [])
@@ -225,6 +240,10 @@ const MoviePage = () => {
                                    sx={buttonStyle}
                                    clickButton={setOpenModalForEditMovie.bind(this, true)}
                                    title="edit movie" />
+                        <ButtonMui variant="outlined"
+                                   sx={buttonStyle}
+                                   clickButton={setOpenModalForDeleteMovie.bind(this, true)}
+                                   title="delete movie" />
                     </MenuBlock>
                 </Item>
             </Movie>
@@ -283,6 +302,23 @@ const MoviePage = () => {
                     changeRating={changeRating}
                     title="Edit"
                     handleClear={handleClear} />
+            </ModalMui>
+            <ModalMui isOpen={isOpenModalForDeleteMovie}
+                      title="Are you sure ?"
+                      styles={DIALOG}
+                      onClose={setOpenModalForDeleteMovie.bind(this, false)}>
+                <ButtonContainer>
+                    <ButtonMui
+                        variant="outlined"
+                        color="error"
+                        title="Cancel"
+                        clickButton={setOpenModalForDeleteMovie.bind(this, false)} />
+                    <ButtonMui
+                        variant="outlined"
+                        color="secondary"
+                        title="Delete"
+                        clickButton={deleteMovie} />
+                </ButtonContainer>
             </ModalMui>
         </Container>
     );

@@ -153,3 +153,7 @@ export const FormContainer = styled.div`
   display: grid;
   grid-gap: 30px;
 `;
+
+export const ButtonContainer = styled(FormContainer)`
+  grid-template-columns: 1fr 1fr;
+`;

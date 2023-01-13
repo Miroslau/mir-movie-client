@@ -34,5 +34,9 @@ export default {
 
   updateMovie(id: number | undefined, body: movieType | createMovie) {
     return httpClient.put(`movies/${id}`, body);
+  },
+
+  deleteMovie(id: number | undefined) {
+      return httpClient.delete(`movies/${id}`)
   }
 };
