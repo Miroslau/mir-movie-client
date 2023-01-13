@@ -17,8 +17,14 @@ const useFormForMovie = (
 
     useEffect(() => {
         if (movie) {
-            console.log(movie)
-            setMovieModel(movie);
+            const movieDTO = {
+                title: movie?.title,
+                release: movie?.release,
+                rating: movie?.rating,
+                plot: movie?.plot,
+                movieLength: movie?.movieLength,
+            }
+            setMovieModel(movieDTO);
         }
     }, [movie]);
 

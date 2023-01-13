@@ -68,8 +68,30 @@ const MoviePage = () => {
 
     const navigate = useNavigate();
 
+    const updateMovie = () => {
+        setLoading(true);
+        moviesAPI.updateMovie(movie?.id, movieModel)
+            .then(({ data }) => {
+                // @ts-ignore
+                setMovie(prevState => ({
+                    ...prevState,
+                    title: data.title,
+                    plot: data.plot,
+                    release: data.release,
+                    movieLength: data.movieLength,
+                    rating: data.rating,
+                }));
+                setLoading(false);
+                setOpenModalForEditMovie(false)
+            })
+            .catch((error) => {
+                setLoading(false);
+                setOpenModalForEditMovie(false);
+            })
+    }
+
     const { handleChange, handleSubmit, movieModel, errors, handleClear, changeRating } = useFormForMovie(
-        () => {},
+        updateMovie,
         movieValidator,
         setOpenModalForEditMovie,
         movie

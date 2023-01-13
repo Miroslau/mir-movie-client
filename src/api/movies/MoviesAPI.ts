@@ -1,5 +1,5 @@
 import httpClient from "../index";
-import {createMovie} from "../../types/moive-type";
+import {createMovie, movieType} from "../../types/moive-type";
 
 export default {
   getAllMovies(limit: number, page: number) {
@@ -30,5 +30,9 @@ export default {
 
   uploadPostersForMovie(id: number | undefined, formData: FormData) {
       return httpClient.post(`movies/${id}/upload-posters`, formData);
+  },
+
+  updateMovie(id: number | undefined, body: movieType | createMovie) {
+    return httpClient.put(`movies/${id}`, body);
   }
 };
