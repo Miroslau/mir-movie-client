@@ -15,7 +15,7 @@ export type movieType = {
   title: string;
   posterUrl: string;
   horizontalPoster: string;
-  release: Date;
+  release: Moment;
   rating: number;
   plot: string;
   movieLength: number;

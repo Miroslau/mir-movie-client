@@ -16,7 +16,7 @@ interface FormProps {
     handleChange: (args?: any) => void;
     handleSubmit: (args?: any) => void;
     title: string;
-    handleClear: () => void;
+    handleClear?: () => void;
     changeRating?: (args?: any) => void;
 }
 

@@ -1,12 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
 import moment, {isMoment} from "moment";
-import {createMovie} from "../types/moive-type";
+import {createMovie, movieType} from "../types/moive-type";
 
 const useFormForMovie = (
     callback: any,
     validateErrors: any,
-    callBackFunction: any) => {
-    const [movie, setMovie] = useState<createMovie>({
+    callBackFunction: any,
+    movie?: movieType | createMovie | null) => {
+    const [movieModel, setMovieModel] = useState<createMovie>({
         title: '',
         plot: '',
         rating: 0,
@@ -14,27 +15,40 @@ const useFormForMovie = (
         movieLength: 1,
     });
 
+    useEffect(() => {
+        if (movie) {
+            const movieDTO = {
+                title: movie?.title,
+                release: movie?.release,
+                rating: movie?.rating,
+                plot: movie?.plot,
+                movieLength: movie?.movieLength,
+            }
+            setMovieModel(movieDTO);
+        }
+    }, [movie]);
+
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         if (isMoment(event)) {
-            setMovie(prevState => ({
+            setMovieModel(prevState => ({
                 ...prevState,
                 release: event,
             }))
         } else {
             const {name, value} = event.target;
-            setMovie({...movie, [name]: value})
+            setMovieModel({...movieModel, [name]: value})
         }
-    }, [movie]);
+    }, [movieModel]);
 
     const changeRating = useCallback((value: number) => {
-        setMovie({...movie, rating: value})
-    }, [movie])
+        setMovieModel({...movieModel, rating: value})
+    }, [movieModel])
 
     const handleClear = () => {
-        setMovie({
+        setMovieModel({
             title: '',
             plot: '',
             rating: 0,
@@ -45,9 +59,9 @@ const useFormForMovie = (
     };
 
     const handleSubmit = useCallback(() => {
-        setErrors(validateErrors(movie));
+        setErrors(validateErrors(movieModel));
         setIsSubmitting(true);
-    }, [movie]);
+    }, [movieModel]);
 
     const clearError = () => {
         setErrors({});
@@ -56,14 +70,14 @@ const useFormForMovie = (
     useEffect(
         () => {
             if (Object.keys(errors).length === 0 && isSubmitting) {
-                callback(movie);
+                callback(movieModel);
             }
         },
         [errors],
     );
 
     return {
-        handleChange, handleSubmit, movie, errors, clearError, handleClear, changeRating
+        handleChange, handleSubmit, movieModel, errors, clearError, handleClear, changeRating
     };
 }
 

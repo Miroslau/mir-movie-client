@@ -8,6 +8,7 @@ interface MovieProps {
     plot: string;
     horizontalPoster: string;
     rating: number;
+    handleClick?: (args?: any) => void;
 }
 
 const Movie: FC<MovieProps> = (
@@ -16,6 +17,7 @@ const Movie: FC<MovieProps> = (
         title,
         plot,
         horizontalPoster,
+        handleClick,
         rating
     }
 ) => {
@@ -25,7 +27,7 @@ const Movie: FC<MovieProps> = (
             backgroundColor: "#21295c",
             borderRadius: "0.55rem",
         }}>
-            <CardActionArea>
+            <CardActionArea onClick={handleClick?.bind(this, id)}>
                 <CardMedia
                     component="img"
                     height="200"
