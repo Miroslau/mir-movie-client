@@ -30,6 +30,7 @@ const DIALOG = {
     alignItems: 'center',
 }
 
+
 const LIMIT_ITEMS = 8;
 
 const MoviesPage = () => {
@@ -46,7 +47,7 @@ const MoviesPage = () => {
 
     const createMovie = () => {
         dispatch(setStatus(statusEnum.LOADING));
-        moviesAPI.createMovie(movie)
+        moviesAPI.createMovie(movieModel)
             .then(({ data }) => {
                 dispatch(setStatus(statusEnum.SUCCESS));
                 closeModal();
@@ -81,7 +82,7 @@ const MoviesPage = () => {
         dispatch(setCurrentPage(page))
     }
 
-    const { handleChange, handleSubmit, movie, errors, handleClear, changeRating } = useFormForMovie(
+    const { handleChange, handleSubmit, movieModel, errors, handleClear, changeRating } = useFormForMovie(
         createMovie,
         movieValidator,
         setOpenModal,
@@ -147,7 +148,7 @@ const MoviesPage = () => {
             </Box>
             <PaginationContainer>
                 <Pagination
-                    count={Number(pageCount)}
+                    count={pageCount || 0}
                     variant="outlined"
                     onChange={onChangePage}
                     color="secondary"
@@ -162,7 +163,7 @@ const MoviesPage = () => {
                 <Form
                     inputs={movieForm}
                     title="Add movie"
-                    model={movie}
+                    model={movieModel}
                     errors={errors}
                     handleChange={handleChange}
                     changeRating={changeRating}

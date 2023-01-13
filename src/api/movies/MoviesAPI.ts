@@ -26,5 +26,9 @@ export default {
       return httpClient.post(`movies/addGenre/${id}`, {
           genresId: genres
       })
+  },
+
+  uploadPostersForMovie(id: number | undefined, formData: FormData) {
+      return httpClient.post(`movies/${id}/upload-posters`, formData);
   }
 };

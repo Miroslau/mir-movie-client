@@ -5,8 +5,9 @@ interface DefaultProps {
     variant?: string;
     title: string;
     color?: string;
-    disabled?: false;
-    className?: any;
+    disabled?: boolean;
+    className?: string;
+    sx?: any
     children?: any;
     startIcon?: any;
     ariaLabel?: null;
@@ -21,6 +22,7 @@ const ButtonMui: FC<DefaultProps> = (props: any) => {
         color,
         disabled,
         className,
+        sx,
         children,
         ariaLabel,
         startIcon,
@@ -34,7 +36,7 @@ const ButtonMui: FC<DefaultProps> = (props: any) => {
             disabled={disabled}
             color={color}
             className={className}
-            sx={className}
+            sx={sx}
             onClick={clickButton}
             startIcon={startIcon}
             aria-label={ariaLabel}
