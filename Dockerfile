@@ -1,11 +1,41 @@
-FROM node:18.12.1 as builder
-WORKDIR '/app'
-COPY ./package.json ./
-RUN npm install
+###########
+# BUILDER #
+###########
+
+# pull official base image
+FROM node:16.5.0-alpine as builder
+
+# set working directory
+WORKDIR /usr/src/app
+
+# add `usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
+
+# create build
 COPY . .
 RUN npm run build
 
-FROM nginx
+#########
+# FINAL #
+#########
+
+# base image
+FROM nginx:1.19.4-alpine
+
+# update nginx conf
+RUN rm -rf /etc/nginx/conf.d
 COPY default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/build /usr/share/nginx/html
-CMD /bin/bash -c "envsubst '\$PORT \$AWS_APP_CLIENT_URL \$AWS_APP_BACKEND_URL' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
+
+# copy static files
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+
+# expose port
+EXPOSE 80
+
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]
