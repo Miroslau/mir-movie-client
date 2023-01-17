@@ -1,9 +1,10 @@
 import RouteType from "../types/routeType";
-import {MAIN_PAGE, MOVIES, FULL_MOVIE} from "../constants/routes";
+import {MAIN_PAGE, MOVIES, FULL_MOVIE, ACTORS} from "../constants/routes";
 import MoviesPage from "../pages/movies-page/movies-page";
 import MainPage from "../pages/main-page/main-page";
 import React from "react";
 import MoviePage from "../pages/movies-page/movie-page/movie-page";
+import ActorsPage from "../pages/actors-page/actors-page";
 
 const FullMovie = React.lazy(
     () => import('../pages/movies-page/movie-page/movie-page'),
@@ -24,5 +25,9 @@ export const publicRoutesInLayout: RouteType[] = [
   {
       path: FULL_MOVIE,
       Component: MoviePage,
+  },
+  {
+      path: ACTORS,
+      Component: ActorsPage,
   }
 ];

@@ -1,4 +1,4 @@
-import { MovieOutlined } from '@mui/icons-material';
+import { MovieOutlined, Person2Outlined } from '@mui/icons-material';
 import React from "react";
 
 export type Navigation = {
@@ -14,5 +14,9 @@ export const menuItems: Navigation[] = [
     {
         text: 'Movies',
         icon: <MovieOutlined />
+    },
+    {
+        text: 'Actors',
+        icon: <Person2Outlined />
     }
 ]

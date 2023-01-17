@@ -1,4 +1,5 @@
 import { movieType } from "./moive-type";
+import StatusEnum from "../enums/status-enum";
 
 type actorType = {
   id: number;
@@ -9,5 +10,18 @@ type actorType = {
   Nationality: string;
   movies: movieType[];
 };
+
+export type actorParams = {
+  limit: number;
+  page: number;
+}
+
+export type actorSliceState = {
+  actors: actorType[];
+  status: StatusEnum;
+  errorMessage: unknown;
+  totalActors: number;
+  totalPages: number;
+}
 
 export default actorType;

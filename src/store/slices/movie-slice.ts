@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { movieSliceState, movieType } from "../../types/moive-type";
-import {addMovie, fetchMovies} from "../actions/fetch-movies";
+import {fetchMovies} from "../actions/fetch-movies";
 import { RootState } from "../store";
 import StatusEnum from "../../enums/status-enum";
 
