@@ -1,5 +1,6 @@
 import { movieType } from "./moive-type";
 import StatusEnum from "../enums/status-enum";
+import {Moment} from "moment/moment";
 
 type actorType = {
   id: number;
@@ -9,6 +10,13 @@ type actorType = {
   Birth: Date;
   Nationality: string;
   movies: movieType[];
+};
+
+export type createActor = {
+  firstName: string;
+  secondName: string,
+  Birth: Moment,
+  Nationality: string;
 };
 
 export type actorParams = {

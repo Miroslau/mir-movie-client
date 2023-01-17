@@ -22,7 +22,7 @@ import moviesAPI from "../../api/movies/MoviesAPI";
 import {filterSelector, setCurrentPage} from "../../store/slices/filter-slice";
 import statusEnum from "../../enums/status-enum";
 import {useNavigate} from "react-router-dom";
-import {FULL_MOVIE, MOVIES} from "../../constants/routes";
+import {FULL_MOVIE} from "../../constants/routes";
 
 const DIALOG = {
     display: 'grid',
@@ -48,7 +48,7 @@ const MoviesPage = () => {
     const createMovie = () => {
         dispatch(setStatus(statusEnum.LOADING));
         moviesAPI.createMovie(movieModel)
-            .then(({ data }) => {
+            .then(() => {
                 dispatch(setStatus(statusEnum.SUCCESS));
                 closeModal();
             })

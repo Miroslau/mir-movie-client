@@ -28,9 +28,6 @@ const TextInput: FC<TextInputProps> = ({
     placeholder,
     inputText
                                        }) => {
-
-    console.log(value);
-
     const [currentValue, setCurrentValue] = useState(value);
 
     useEffect(() => {

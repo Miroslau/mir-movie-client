@@ -7,17 +7,22 @@ import ButtonMui from "../../components/ui-components/button-mui/button-mui";
 import {useAppDispatch} from "../../store/store";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {actorSelector, clearState} from "../../store/slices/actor-slice";
+import {actorSelector, clearState, setStatus} from "../../store/slices/actor-slice";
 import {filterSelector, setCurrentPage} from "../../store/slices/filter-slice";
 import {fetchActors} from "../../store/actions/fetch-actors";
-import StatusEnum from "../../enums/status-enum";
+import statusEnum from "../../enums/status-enum";
 import Modal from "../../components/modal/modal";
 import Loader from "../../components/loader/loader";
 import emptyImg from '../../assets/emptyImg.png';
 import {PaginationContainer} from "../movies-page/movies-page-styled";
 import ModalMui from "../../components/ui-components/modal-mui/modal-mui";
+import useFormForActor from "../../hooks/use-form-for-actor";
+import Form from "../../components/form/form";
+import {actorForm} from "../../constants/actor-form";
+import {userValidator} from "../../validators/user-validator";
+import actorsAPI from "../../api/actors/actorsAPI";
 
-const LIMIT_ITEMS = 8;
+const LIMIT_ITEMS = 4;
 
 const DIALOG = {
     display: 'grid',
@@ -30,6 +35,8 @@ const ActorsPage = () => {
     const [pageCount, setPageCount] = useState(0);
     const [isOpenModal, setOpenModal] = useState(false);
 
+    console.log(pageCount);
+
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
@@ -37,19 +44,47 @@ const ActorsPage = () => {
     const { actors, totalPages, totalActors, status } = useSelector(actorSelector);
     const { currentPage } = useSelector(filterSelector);
 
-    const closeModal = () => {
-        setOpenModal(false);
+    const createActor = () => {
+        dispatch(setStatus(statusEnum.LOADING));
+        actorsAPI.createActor(actorModel)
+            .then(() => {
+                dispatch(setStatus(statusEnum.SUCCESS));
+                closeModal();
+            })
+            .catch(error => {
+                console.error(error);
+                dispatch(setStatus(statusEnum.ERROR));
+                closeModal();
+            });
     }
 
-    const getActors = () => dispatch(fetchActors({limit: LIMIT_ITEMS, page: currentPage}));
+    const closeModal = () => {
+        setOpenModal(false);
+        handleClear();
+    };
+
+    const getActors = () => {
+        dispatch(
+            fetchActors({
+                limit: LIMIT_ITEMS,
+                page: currentPage
+            })
+        );
+    }
 
     const onChangePage = (_: any, page: number): void => {
         dispatch(setCurrentPage(page))
-    }
+    };
+
+    const { handleChange, handleSubmit, actorModel, errors, handleClear, clearError } = useFormForActor(
+        createActor,
+        userValidator,
+        setOpenModal,
+    );
 
     useEffect(() => {
         getActors();
-        dispatch(clearState())
+        dispatch(clearState());
     }, [currentPage]);
 
     useEffect(() => {
@@ -59,7 +94,7 @@ const ActorsPage = () => {
     return (
         <Box p="1.5rem 2.5rem">
             {
-                status === StatusEnum.LOADING && (
+                status === statusEnum.LOADING && (
                     <Modal>
                         <Loader />
                     </Modal>
@@ -84,7 +119,7 @@ const ActorsPage = () => {
             </FlexBetween>
             <Box pt="20px"
                  display="grid"
-                 gridTemplateColumns="repeat(3, 270px)"
+                 gridTemplateColumns="repeat(4, minmax(270px, 1fr))"
                  rowGap="10px"
                  columnGap="20px"
                  sx={{
@@ -134,8 +169,15 @@ const ActorsPage = () => {
             <ModalMui isOpen={isOpenModal}
                       title="Add a new actor"
                       styles={DIALOG}
-                      onClose={closeModal}>
-                <div>123</div>
+                      onClose={closeModal}
+            >
+                <Form inputs={actorForm}
+                      title="Add actor"
+                      model={actorModel}
+                      errors={errors}
+                      handleChange={handleChange}
+                      handleSubmit={handleSubmit}
+                      handleClear={handleClear} />
             </ModalMui>
         </Box>
     );
