@@ -1,5 +1,5 @@
 interface FilterType {
-    currentPage: number;
+  currentPage: number;
 }
 
 export default FilterType;

@@ -1,5 +1,5 @@
 import httpClient from "../index";
-import {createMovie, movieType} from "../../types/moive-type";
+import { createMovie, movieType } from "../../types/moive-type";
 
 export default {
   getAllMovies(limit: number, page: number) {
@@ -8,28 +8,27 @@ export default {
   },
 
   getMovieById(id: number) {
-      return httpClient.get(`movies/${id}`);
+    return httpClient.get(`movies/${id}`);
   },
 
-  createMovie({title,
+  createMovie({ title, plot, rating, release, movieLength }: createMovie) {
+    return httpClient.post(`/movies`, {
+      title,
       plot,
       rating,
       release,
-      movieLength
-              }: createMovie) {
-    return httpClient.post(`/movies`, {
-      title, plot, rating, release, movieLength
-    })
+      movieLength,
+    });
   },
 
   addGenres(id: number | undefined, genres: number[]) {
-      return httpClient.post(`movies/addGenre/${id}`, {
-          genresId: genres
-      })
+    return httpClient.post(`movies/addGenre/${id}`, {
+      genresId: genres,
+    });
   },
 
   uploadPostersForMovie(id: number | undefined, formData: FormData) {
-      return httpClient.post(`movies/${id}/upload-posters`, formData);
+    return httpClient.post(`movies/${id}/upload-posters`, formData);
   },
 
   updateMovie(id: number | undefined, body: movieType | createMovie) {
@@ -37,6 +36,6 @@ export default {
   },
 
   deleteMovie(id: number | undefined) {
-      return httpClient.delete(`movies/${id}`)
-  }
+    return httpClient.delete(`movies/${id}`);
+  },
 };

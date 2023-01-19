@@ -1,17 +1,17 @@
 import React, { FC, useEffect, useState, useCallback } from "react";
 import BoxTitle from "../../components/section-component/box-title/box-title";
 import { useSelector } from "react-redux";
-import {clearState, movieSelector} from "../../store/slices/movie-slice";
+import { clearState, movieSelector } from "../../store/slices/movie-slice";
 import { fetchMovies } from "../../store/actions/fetch-movies";
 import { useAppDispatch } from "../../store/store";
 import BoxList from "../../components/section-component/box-list/box-list";
-import {Container, ContainerForMovies} from "./main-page-styled";
+import { Container, ContainerForMovies } from "./main-page-styled";
 import { movieType } from "../../types/moive-type";
 import Modal from "../../components/modal/modal";
 import Loader from "../../components/loader/loader";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StatusEnum from "../../enums/status-enum";
-import {MOVIES} from "../../constants/routes";
+import { MOVIES } from "../../constants/routes";
 
 const MainPage: FC = () => {
   const [movieOffset] = useState(0);
@@ -45,16 +45,18 @@ const MainPage: FC = () => {
     }
   }, [movies]);
 
-  const choseMovie = useCallback((movie: movieType) => {
-    setCurrentMovie(movie);
-    setHorizontalPoster(movie.horizontalPoster);
-  }, [movies]);
+  const choseMovie = useCallback(
+    (movie: movieType) => {
+      setCurrentMovie(movie);
+      setHorizontalPoster(movie.horizontalPoster);
+    },
+    [movies]
+  );
 
   const navigateToMovies = useCallback(() => {
     dispatch(clearState());
     navigate(`/${MOVIES}`);
-  }, [])
-
+  }, []);
 
   return (
     <Container image={horizontalPoster}>
@@ -69,7 +71,12 @@ const MainPage: FC = () => {
         padding="100px 88px"
       />
       <ContainerForMovies>
-        <BoxList navigateClick={navigateToMovies} title="All movies" data={movies} handleClick={choseMovie} />
+        <BoxList
+          navigateClick={navigateToMovies}
+          title="All movies"
+          data={movies}
+          handleClick={choseMovie}
+        />
       </ContainerForMovies>
     </Container>
   );

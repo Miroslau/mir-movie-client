@@ -17,7 +17,7 @@ export const FileCard = styled.div`
 export const FileInputs = styled.div`
   position: relative;
   margin-bottom: 1.5em;
-  
+
   input {
     position: relative;
     max-width: 200px;
@@ -26,7 +26,7 @@ export const FileInputs = styled.div`
     cursor: pointer;
     opacity: 0;
   }
-  
+
   button {
     position: absolute;
     top: 0;

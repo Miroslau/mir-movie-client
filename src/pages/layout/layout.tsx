@@ -21,9 +21,12 @@ const Layout = () => {
           setIsSideBarOpen={setIsSideBarOpen}
         />
       )}
-      <Box flexGrow={1} style={{
-        backgroundColor: '#191F45'
-      }}>
+      <Box
+        flexGrow={1}
+        style={{
+          backgroundColor: "#191F45",
+        }}
+      >
         <Outlet />
       </Box>
     </Box>
