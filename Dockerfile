@@ -1,15 +1,41 @@
-FROM node:18.12.1
+###########
+# BUILDER #
+###########
 
-WORKDIR /app
+# pull official base image
+FROM node:16.5.0-alpine as builder
 
-COPY package*.json ./
+# set working directory
+WORKDIR /usr/src/app
 
-RUN npm install
+# add `usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
+# install and cache app dependencies
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
+
+# create build
 COPY . .
+RUN npm run build
 
-COPY ./dist ./dist
+#########
+# FINAL #
+#########
 
-EXPOSE 3000
+# base image
+FROM nginx:1.19.4-alpine
 
-CMD ["npm", "run", "start:dev"]
+# update nginx conf
+RUN rm -rf /etc/nginx/conf.d
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# copy static files
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+
+# expose port
+EXPOSE 80
+
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]
