@@ -12,9 +12,6 @@ env:
 
   CONTAINER_NAME: mir-movie-client
 
-permissions:
-  contents: read
-
 jobs:
   deploy:
     name: Deploy
