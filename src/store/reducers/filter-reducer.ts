@@ -1,4 +1,4 @@
-import {filterSlice} from "../slices/filter-slice";
+import { filterSlice } from "../slices/filter-slice";
 
 const filterReducer = filterSlice.reducer;
 

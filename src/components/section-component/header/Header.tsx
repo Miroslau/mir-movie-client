@@ -8,7 +8,12 @@ interface HeaderProps {
   subtitle?: string;
 }
 
-const Header: FC<HeaderProps> = ({ title, subtitle, subTitleColor, titleColor }) => {
+const Header: FC<HeaderProps> = ({
+  title,
+  subtitle,
+  subTitleColor,
+  titleColor,
+}) => {
   return (
     <Box>
       <Typography

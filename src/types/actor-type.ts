@@ -1,6 +1,6 @@
 import { movieType } from "./moive-type";
 import StatusEnum from "../enums/status-enum";
-import {Moment} from "moment/moment";
+import { Moment } from "moment/moment";
 
 type actorType = {
   id: number;
@@ -14,15 +14,15 @@ type actorType = {
 
 export type createActor = {
   firstName: string;
-  secondName: string,
-  Birth: Moment,
+  secondName: string;
+  Birth: Moment;
   Nationality: string;
 };
 
 export type actorParams = {
   limit: number;
   page: number;
-}
+};
 
 export type actorSliceState = {
   actors: actorType[];
@@ -30,6 +30,6 @@ export type actorSliceState = {
   errorMessage: unknown;
   totalActors: number;
   totalPages: number;
-}
+};
 
 export default actorType;

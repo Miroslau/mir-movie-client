@@ -20,12 +20,12 @@ export const Title = styled.p`
   color: white;
   padding: 20px 20px;
   cursor: pointer;
-  transition: all .3s ease-in-out;
-  
+  transition: all 0.3s ease-in-out;
+
   &:hover {
     color: rgba(250, 71, 118, 0.5);
     font-size: 40px;
     font-weight: bold;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
-`
+`;

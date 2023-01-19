@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   position: relative;
-  padding: 60px 60px; 
+  padding: 60px 60px;
 `;
 
 export const Movie = styled.div`
@@ -19,12 +19,11 @@ export const Image = styled.img`
   height: auto;
   border-radius: 6px;
   backface-visibility: hidden;
-  transition: .5s ease-in-out;
-  
+  transition: 0.5s ease-in-out;
 `;
 
 export const MiddleItem = styled.div`
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
   opacity: 0;
   width: 100%;
   height: 100%;
@@ -43,9 +42,9 @@ export const ImageBlock = styled.div`
   position: relative;
   width: 100%;
   cursor: pointer;
-  
+
   &:hover ${Image} {
-    opacity: .3;
+    opacity: 0.3;
   }
 
   &:hover ${MiddleItem} {
@@ -54,7 +53,7 @@ export const ImageBlock = styled.div`
 `;
 
 export const Text = styled.div`
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
   font-size: 16px;
   padding: 16px 32px;
@@ -66,7 +65,7 @@ export const Item = styled.div`
 `;
 
 export const Title = styled.h3`
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 700;
   font-size: 36px;
@@ -85,7 +84,7 @@ export const GenresBlock = styled.div`
 export const PlotBox = styled.div`
   padding-top: 50px;
   max-width: 580px;
-  font-family: 'Lato';
+  font-family: "Lato";
 `;
 
 export const PlotTitle = styled.div`
@@ -114,7 +113,7 @@ export const MenuBlock = styled.div`
 export const ScoreBox = styled.div`
   padding: 15px;
   background: rgba(217, 217, 217, 0.1);
-  border: 1px solid #A41B1B;
+  border: 1px solid #a41b1b;
   border-radius: 8px;
 `;
 

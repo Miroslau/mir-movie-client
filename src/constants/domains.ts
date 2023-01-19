@@ -1,1 +1,1 @@
-export const CURRENT_URL = '/api/';
+export const CURRENT_URL = "/api/";

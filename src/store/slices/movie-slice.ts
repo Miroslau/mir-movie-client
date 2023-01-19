@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { movieSliceState, movieType } from "../../types/moive-type";
-import {fetchMovies} from "../actions/fetch-movies";
+import { fetchMovies } from "../actions/fetch-movies";
 import { RootState } from "../store";
 import StatusEnum from "../../enums/status-enum";
 
@@ -17,7 +17,7 @@ export const movieSlice = createSlice({
   initialState,
   reducers: {
     setMovie(state, { payload }) {
-      state.movies.push({...payload})
+      state.movies.push({ ...payload });
     },
     setStatus(state, { payload }) {
       state.status = payload;
